@@ -3,7 +3,7 @@
  * Plugin Name: Kreme Plugin
  * Plugin URI: #
  * Description: Plugin accompany the themes of mTheme.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: mTheme
  * Author URI: http://themeforest.net/user/mtheme_market
  * License: license purchased
