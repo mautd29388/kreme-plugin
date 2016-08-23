@@ -76,7 +76,6 @@ class mTheme_Shortcode {
 			$template = $template_path . "/contents/{$slug}-{$name}.php";
 		} else
 			$template = $template_path . "/contents/{$slug}.php";
-		
 		return $template;
 	}
 	
@@ -291,7 +290,7 @@ class mTheme_Shortcode {
 				'width' 			=> '1/3',
 				'offset' 			=> ''
 		), $atts );
-	
+
 		// Add Class
 		$width = $css = '';
 		$width = wpb_translateColumnWidthToSpan( $atts['width'] );
@@ -313,20 +312,18 @@ class mTheme_Shortcode {
 		}
 	
 		$parent_class[] = vc_shortcode_custom_css_class( $atts['css']);
-		$parent_class[] = $atts['styles'];
-	
+
 		if ( !empty($atts['el_class']) ) {
 			$parent_class[] = $atts['el_class'];
 		}
 	
 		$layout = '';
-		if ( $atts['layout'] == 'tab' ) {
-			$parent_class[] = 'mTheme-posts-tab';
+		if ( $atts['layout'] == '' ) {
+			$parent_class[] = 'mTheme-posts-grid blog';
 		} else{
-			$layout = $atts['layout'];
+            $parent_class[] = 'mTheme-posts-list blog blog-v2';
 		}
-	
-		$columns = kreme_translateColumnWidthVC($atts['width']);
+		//$columns = kreme_translateColumnWidthVC($atts['width']);
 	
 		// Query
 		$args = array(
@@ -379,8 +376,13 @@ class mTheme_Shortcode {
 			echo '<div class="before-content">'. $atts['before_content'] .'</div>';
 	
 		echo '<div class="mtheme-posts-inner">';
-	
-		$template = self::mTheme_get_template_part ( 'content-posts', $layout ); 
+
+        if ( $atts['layout'] == '' ) {
+            $template = self::mTheme_get_template_part ( 'content-posts-grid' );
+        } else{
+            $template = self::mTheme_get_template_part ( 'content-posts_list');
+        }
+		//$template = self::mTheme_get_template_part ( 'content-posts-list', $layout );
 		if ( file_exists("{$template}") ) {
 	
 			if ( $query->have_posts () ) {
@@ -1141,10 +1143,10 @@ class mTheme_Shortcode {
 								'heading' 		=> __( 'Layout', 'mTheme' ),
 								'param_name' 	=> 'layout',
 								'value' 		=> array(
-										__( 'Basic', 'mTheme' ) 	=> '',
-										//__( 'Tab', 'mTheme' ) 		=> 'tab',
-										//__( 'Carousel', 'mTheme' )	=> 'carousel',
-								)
+										__( 'Grid', 'mTheme' ) 	=> '',
+										__( 'List', 'mTheme' )  => 'post_list',
+								),
+                                'std' => 'post_grid',
 						),
 						/*
 						 array(
